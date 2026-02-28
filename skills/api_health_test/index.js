@@ -30,7 +30,9 @@ async function runHealthCheck(endpoint = process.env.API_URL) {
 }
 
 if (require.main === module) {
-    runHealthCheck().then(res => console.log(JSON.stringify(res, null, 2)));
+    const args = process.argv.slice(2);
+    const endpointArg = args.find(a => a.startsWith('--url='))?.split('=')[1];
+    runHealthCheck(endpointArg).then(res => console.log(JSON.stringify(res, null, 2)));
 }
 
 module.exports = runHealthCheck;

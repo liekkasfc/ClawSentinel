@@ -31,7 +31,9 @@ async function runSmokeTest(path = '/login') {
 }
 
 if (require.main === module) {
-    runSmokeTest().then(res => console.log(JSON.stringify(res, null, 2)));
+    const args = process.argv.slice(2);
+    const pathArg = args.find(a => a.startsWith('--path='))?.split('=')[1];
+    runSmokeTest(pathArg).then(res => console.log(JSON.stringify(res, null, 2)));
 }
 
 module.exports = runSmokeTest;
