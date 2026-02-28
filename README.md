@@ -19,6 +19,12 @@ A modular, automated testing suite designed specifically for the **OpenClaw** ec
 - OpenClaw installed
 
 ### Setup
+1. **One-Liner Installation (Recommended)**:
+   ```bash
+   curl -sSL https://raw.githubusercontent.com/liekkasfc/ClawSentinel/main/scripts/install.sh | bash
+   ```
+   *Alternatively, follow the manual steps below:*
+
 1. Clone the repository:
    ```bash
    git clone https://github.com/your-username/openclaw-testing-suite.git
