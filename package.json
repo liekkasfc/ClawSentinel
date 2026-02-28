@@ -1,0 +1,19 @@
+{
+    "name": "clawsentinel",
+    "version": "1.0.0",
+    "description": "Local testing suite for OpenClaw components",
+    "main": "skills/test_orchestrator/index.js",
+    "scripts": {
+        "test": "node skills/test_orchestrator/index.js",
+        "test:api": "node skills/api_health_test/index.js",
+        "test:ui": "node skills/ui_smoke_test/index.js",
+        "test:llm": "node skills/llm_regression_test/index.js"
+    },
+    "dependencies": {
+        "axios": "^1.6.0",
+        "playwright": "^1.40.0",
+        "openai": "^4.20.0",
+        "dotenv": "^16.3.0",
+        "node-cron": "^3.0.0"
+    }
+}
