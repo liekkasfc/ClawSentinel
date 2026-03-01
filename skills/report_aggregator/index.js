@@ -14,6 +14,10 @@ function runAggregator(results) {
     };
 
     const reportPath = path.join(__dirname, '../../reports', `${timestamp.replace(/:/g, '-')}.json`);
+    const reportDir = path.dirname(reportPath);
+    if (!fs.existsSync(reportDir)) {
+        fs.mkdirSync(reportDir, { recursive: true });
+    }
     fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
 
     return {
