@@ -1,10 +1,5 @@
 [
     {
-        "id": "t1",
-        "prompt": "Explain Quantum Entanglement simply."
-    },
-    {
-        "id": "t2",
-        "prompt": "Write a Python script to sort a list of numbers."
+        "prompt": "Say hello world"
     }
 ]

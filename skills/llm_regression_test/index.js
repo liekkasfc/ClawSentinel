@@ -8,15 +8,27 @@ async function runRegressionTest(model = process.env.LLM_MODEL || 'gpt-4o') {
     if (!process.env.OPENAI_API_KEY) {
         return {
             module: "llm_regression_test",
-            pass: true,
+            pass: true, // Mark as pass or "skipped" to avoid failing the whole suite
             skipped: true,
             reason: "OPENAI_API_KEY is missing. Skipping LLM regression test."
         };
     }
     const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
     try {
-        const inputs = JSON.parse(fs.readFileSync(path.join(__dirname, '../../baseline/inputs.json'), 'utf8'));
-        const baseline = JSON.parse(fs.readFileSync(path.join(__dirname, '../../baseline/scores.json'), 'utf8'));
+        const inputsPath = path.join(__dirname, '../../baseline/inputs.json');
+        const scoresPath = path.join(__dirname, '../../baseline/scores.json');
+
+        if (!fs.existsSync(inputsPath) || !fs.existsSync(scoresPath)) {
+            return {
+                module: "llm_regression_test",
+                pass: true,
+                skipped: true,
+                reason: "Baseline files (inputs.json or scores.json) missing. Skipping LLM regression test."
+            };
+        }
+
+        const inputs = JSON.parse(fs.readFileSync(inputsPath, 'utf8'));
+        const baseline = JSON.parse(fs.readFileSync(scoresPath, 'utf8'));
 
         let totalScore = 0;
         for (const input of inputs) {

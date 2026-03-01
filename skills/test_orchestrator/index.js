@@ -4,15 +4,20 @@ const llmTest = require('../llm_regression_test');
 const aggregate = require('../report_aggregator');
 
 async function main() {
-    console.log("🚀 Starting OpenClaw Testing Suite...");
+    const args = process.argv.slice(2);
+    const targetUrl = args.find(a => a.startsWith('--url='))?.split('=')[1] || process.env.BASE_URL || 'http://localhost:3000';
+
+    console.log(`🚀 Starting OpenClaw Testing Suite for ${targetUrl}...`);
 
     const results = [];
 
     console.log("🔍 Running API Health Test...");
-    results.push(await apiTest());
+    // For geo-seo, the root should return 200
+    results.push(await apiTest(targetUrl));
 
     console.log("🔍 Running UI Smoke Test...");
-    results.push(await uiTest());
+    // Default to /sign-in for this project
+    results.push(await uiTest('/sign-in', targetUrl));
 
     console.log("🔍 Running LLM Regression Test...");
     results.push(await llmTest());

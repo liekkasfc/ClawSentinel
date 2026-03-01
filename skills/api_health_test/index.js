@@ -1,13 +1,14 @@
 const axios = require('axios');
 require('dotenv').config();
 
-async function runHealthCheck(endpoint = process.env.API_URL) {
+async function runHealthCheck(endpoint) {
+    endpoint = endpoint || process.env.API_URL || process.env.BASE_URL;
     const start = Date.now();
     try {
         const response = await axios.get(endpoint, { timeout: parseInt(process.env.MAX_LATENCY) || 2000 });
         const latency = Date.now() - start;
 
-        const expectedFields = (process.env.EXPECTED_FIELDS || '').split(',');
+        const expectedFields = (process.env.EXPECTED_FIELDS || '').split(',').filter(f => f.trim() !== '');
         const missingFields = expectedFields.filter(field => !response.data.hasOwnProperty(field));
 
         if (response.status !== 200) throw new Error(`Status code: ${response.status}`);
